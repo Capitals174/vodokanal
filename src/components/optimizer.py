@@ -72,13 +72,14 @@ class Optimizer:
             print("after Prediction: ", results)
             # preds = model.predict(self.get_weights_and_features())
             pred_df['pred'] = results
-            df_true = pred_df[pred_df['pred'] == 1]
+            if (pred_df['pred'] == 1).any():
+                df_true = pred_df[pred_df['pred'] == 1]
 
-            df_true['cost'] = (df_true['sa']*17150 + 
-                            df_true['permanganate']*295900 + 
-                            (df_true['paa_kk']+df_true['paa_f'])*100000)
-
-            return df_true.sort_values(by='cost').iloc[0, -6:].tolist()
+                df_true['cost'] = (df_true['sa']*17150 + 
+                                df_true['permanganate']*295900 + 
+                                (df_true['paa_kk']+df_true['paa_f'])*100000)
+                return df_true.sort_values(by='cost').iloc[0, -6:].tolist()
+            else: return 0
             
     
         
