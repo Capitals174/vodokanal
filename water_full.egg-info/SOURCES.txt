@@ -1,3 +1,4 @@
+README.md
 setup.py
 src/__init__.py
 src/exceptions.py
@@ -7,6 +8,7 @@ src/components/__init__.py
 src/components/data_ingestion.py
 src/components/data_transformation.py
 src/components/model_trainer.py
+src/components/optimizer.py
 src/pipeline/__init__.py
 src/pipeline/predict_pipeline.py
 src/pipeline/train_pipeline.py
