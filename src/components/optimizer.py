@@ -103,7 +103,7 @@ class Optimizer:
                 "sa": [self.sa],
                 "permanganate": [self.permanganate],
             }
-            df = pd.read_excel('notebook\data_new_v1.xlsx')
+            df = pd.read_excel('notebooks\data_new_v1.xlsx')
             df_feature = pd.DataFrame(custom_data_input_dict)
             w_pm = np.arange(df['permanganate'].min(), df['permanganate'].max(), (df['permanganate'].max()-df['permanganate'].min())/50)
             w_sa = np.arange(df['sa'].min(), df['sa'].max(), (df['sa'].max()-df['sa'].min())/50)

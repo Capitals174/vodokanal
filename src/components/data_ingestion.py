@@ -27,7 +27,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info('Entering data ingestion')
         try:
-            df=pd.read_excel('notebook\data_new_v1.xlsx')
+            df=pd.read_excel('notebooks\data_new_v1.xlsx')
             logging.info('Reading data')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
