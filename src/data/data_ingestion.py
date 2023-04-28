@@ -1,14 +1,13 @@
 import os
 import sys
-from src.exceptions import CustomException
-from src.logger import logging
-import pandas as pd
-
-from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
-from src.data.data_transformation import DataTransformation
+import pandas as pd
+from sklearn.model_selection import train_test_split
 
+from src.data.data_transformation import DataTransformation
+from src.exceptions import CustomException
+from src.logger import logging
 from src.models.model_trainer import ModelTrainer
 
 
@@ -23,6 +22,7 @@ class DataIngestionConfig:
 
 
 class DataIngestion:
+
     def __init__(self):
         self.ingestion_config = DataIngestionConfig()
 
@@ -55,8 +55,10 @@ class DataIngestion:
 
             logging.info('Data Ingesttion completed')
 
-            return (self.ingestion_config.train_data_path,
-                   self.ingestion_config.test_data_path)
+            return (
+                self.ingestion_config.train_data_path,
+                self.ingestion_config.test_data_path
+            )
 
         except CustomException as e:
             raise CustomException(e, sys)

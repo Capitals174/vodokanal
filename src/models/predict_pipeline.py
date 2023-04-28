@@ -1,11 +1,14 @@
-import sys
 import os
+import sys
+
 import pandas as pd
+
 from src.exceptions import CustomException
 from src.utils import load_object
 
 
 class PredictPipeline:
+
     def __init__(self):
         pass
 
@@ -26,20 +29,21 @@ class PredictPipeline:
 
 
 class CustomData:
+
     def __init__(
-            self,
-            chromasity: int,
-            feculence: int,
-            ph: int,
-            mn: int,
-            fe: int,
-            alkalinity: int,
-            nh4: int,
-            lime: int,
-            paa_kk: int,
-            paa_f: int,
-            sa: int,
-            permanganate: int,
+        self,
+        chromasity: int,
+        feculence: int,
+        ph: int,
+        mn: int,
+        fe: int,
+        alkalinity: int,
+        nh4: int,
+        lime: int,
+        paa_kk: int,
+        paa_f: int,
+        sa: int,
+        permanganate: int,
     ):
 
         self.chromasity = chromasity

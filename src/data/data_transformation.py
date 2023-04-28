@@ -1,3 +1,4 @@
+import os
 import sys
 from dataclasses import dataclass
 
@@ -10,8 +11,6 @@ from sklearn.preprocessing import StandardScaler
 
 from src.exceptions import CustomException
 from src.logger import logging
-import os
-
 from src.utils import save_object
 
 
@@ -21,6 +20,7 @@ class DataTransformationConfig:
 
 
 class DataTransformation:
+
     def __init__(self):
         self.data_transformation_config = DataTransformationConfig()
 
@@ -30,14 +30,14 @@ class DataTransformation:
         '''
         try:
             numerical_columns = [
-                'feculence', 'ph', 'mn', 'fe', 'alkalinity', 'nh4',
-                'lime', 'paa_kk', 'paa_f', 'sa', 'permanganate'
+                'feculence', 'ph', 'mn', 'fe', 'alkalinity', 'nh4', 'lime',
+                'paa_kk', 'paa_f', 'sa', 'permanganate'
             ]
 
             num_pipeline = Pipeline(
                 steps=[
-                    ("imputer", SimpleImputer(strategy="median")),
-                    ("scaler", StandardScaler())
+                    ("imputer", SimpleImputer(strategy="median")
+                     ), ("scaler", StandardScaler())
                 ]
             )
 
@@ -72,16 +72,19 @@ class DataTransformation:
 
             target_column_name = "quality"
 
-            input_feature_train_df = train_df.drop(columns=[target_column_name],
-                                                   axis=1)
+            input_feature_train_df = train_df.drop(
+                columns=[target_column_name], axis=1
+            )
             target_feature_train_df = train_df[target_column_name]
 
-            input_feature_test_df = test_df.drop(columns=[target_column_name],
-                                                 axis=1)
+            input_feature_test_df = test_df.drop(
+                columns=[target_column_name], axis=1
+            )
             target_feature_test_df = test_df[target_column_name]
 
             logging.info(
-                "Applying preprocessing object on training dataframe and testing dataframe."
+                "Applying preprocessing object on training "
+                "dataframe and testing dataframe."
             )
 
             input_feature_train_arr = preprocessing_obj.fit_transform(
@@ -91,16 +94,16 @@ class DataTransformation:
                 input_feature_test_df
             )
 
-            train_arr = np.c_[
-                input_feature_train_arr, np.array(target_feature_train_df)
-            ]
+            train_arr = np.c_[input_feature_train_arr,
+                              np.array(target_feature_train_df)]
             test_arr = np.c_[input_feature_test_arr,
-                            np.array(target_feature_test_df)]
+                             np.array(target_feature_test_df)]
 
             logging.info("Saved preprocessing object.")
 
             save_object(
-                file_path=self.data_transformation_config.preprocessor_obj_file_path,
+                file_path=self.data_transformation_config.
+                preprocessor_obj_file_path,
                 obj=preprocessing_obj
             )
 

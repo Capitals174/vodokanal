@@ -1,8 +1,10 @@
 import sys
+
+import numpy as np
 import pandas as pd
+
 from src.exceptions import CustomException
 from src.models.predict_pipeline import PredictPipeline
-import numpy as np
 
 
 def cartesian(arrays, out=None):
@@ -21,30 +23,32 @@ def cartesian(arrays, out=None):
     if arrays[1:]:
         cartesian(arrays[1:], out=out[0:m, 1:])
         for j in range(1, arrays[0].size):
-            out[j * m: (j + 1) * m, 1:] = out[0: m, 1:]
+            out[j * m:(j + 1) * m, 1:] = out[0:m, 1:]
     return out.tolist()
 
 
 class PredictsOptimizer:
+
     def __init__(self):
         pass
 
 
 class Optimizer:
+
     def __init__(
-            self,
-            chromasity: int,
-            feculence: int,
-            ph: int,
-            mn: int,
-            fe: int,
-            alkalinity: int,
-            nh4: int,
-            lime: int,
-            PAA_kk: int,
-            PAA_f: int,
-            sa: int,
-            permanganate: int,
+        self,
+        chromasity: int,
+        feculence: int,
+        ph: int,
+        mn: int,
+        fe: int,
+        alkalinity: int,
+        nh4: int,
+        lime: int,
+        PAA_kk: int,
+        PAA_f: int,
+        sa: int,
+        permanganate: int,
     ):
 
         self.chromasity = chromasity
@@ -72,9 +76,8 @@ class Optimizer:
                 df_true = pred_df[pred_df['pred'] == 1]
 
                 df_true['cost'] = (
-                    df_true['sa'] * 17150 + df_true['permanganate'] * 295900 + (
-                        df_true['paa_kk'] + df_true['paa_f']
-                    ) * 100000
+                    df_true['sa'] * 17150 + df_true['permanganate'] * 295900 +
+                    (df_true['paa_kk'] + df_true['paa_f']) * 100000
                 )
                 return df_true.sort_values(by='cost').iloc[0, -6:].tolist()
             else:
@@ -104,18 +107,20 @@ class Optimizer:
             df_feature = pd.DataFrame(custom_data_input_dict)
             w_pm = np.arange(
                 df['permanganate'].min(), df['permanganate'].max(),
-                (df['permanganate'].max()-df['permanganate'].min())/50
+                (df['permanganate'].max() - df['permanganate'].min()) / 50
             )
             w_sa = np.arange(
                 df['sa'].min(), df['sa'].max(),
-                (df['sa'].max()-df['sa'].min())/50
+                (df['sa'].max() - df['sa'].min()) / 50
             )
             w_paakk = np.arange(
                 df['paa_kk'].min(), df['paa_kk'].max(),
-                (df['paa_kk'].max()-df['paa_kk'].min())/50
+                (df['paa_kk'].max() - df['paa_kk'].min()) / 50
             )
-            w_paaf = np.arange(df['paa_f'].min(), df['paa_f'].max(),
-                               (df['paa_f'].max()-df['paa_f'].min())/50)
+            w_paaf = np.arange(
+                df['paa_f'].min(), df['paa_f'].max(),
+                (df['paa_f'].max() - df['paa_f'].min()) / 50
+            )
 
             weights = pd.DataFrame(data=[w_paakk, w_paaf, w_sa, w_pm]).T
             weights.columns = ['paa_kk', 'paa_f', 'sa', 'permanganate']
@@ -124,9 +129,10 @@ class Optimizer:
                 data=combos, columns=['paa_kk', 'paa_f', 'sa', 'permanganate']
             )
 
-            single_features_weights = df_feature.iloc[0, :-4].to_frame().T.merge(
-                weights_combo, how='cross'
-            )
+            single_features_weights = df_feature.iloc[
+                0, :-4].to_frame().T.merge(
+                    weights_combo, how='cross'
+                )
 
             return single_features_weights
 

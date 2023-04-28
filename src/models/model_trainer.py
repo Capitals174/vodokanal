@@ -11,11 +11,9 @@ from sklearn.ensemble import (
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import accuracy_score
 
-
 from src.exceptions import CustomException
 from src.logger import logging
-
-from src.utils import save_object, evaluate_models
+from src.utils import evaluate_models, save_object
 
 
 @dataclass
@@ -24,6 +22,7 @@ class ModelTrainerConfig:
 
 
 class ModelTrainer:
+
     def __init__(self):
         self.model_trainer_config = ModelTrainerConfig()
 
@@ -31,9 +30,7 @@ class ModelTrainer:
         try:
             logging.info("Split training and test input data")
             X_train, y_train, X_test, y_test = (
-                train_array[:, :-1],
-                train_array[:, -1],
-                test_array[:, :-1],
+                train_array[:, :-1], train_array[:, -1], test_array[:, :-1],
                 test_array[:, -1]
             )
             models = {
@@ -44,7 +41,6 @@ class ModelTrainer:
                 "AdaBoost Classifier": AdaBoostClassifier(),
             }
             params = {
-
                 "Random Forest": {
                     'n_estimators': [128, 256]
                 },
@@ -66,8 +62,13 @@ class ModelTrainer:
             }
 
             model_report: dict = evaluate_models(
-                X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
-                models=models, param=params)
+                X_train=X_train,
+                y_train=y_train,
+                X_test=X_test,
+                y_test=y_test,
+                models=models,
+                param=params
+            )
 
             best_model_score = max(sorted(model_report.values()))
 
