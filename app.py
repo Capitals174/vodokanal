@@ -1,27 +1,23 @@
-from flask import Flask,request,render_template
-import numpy as np
-import pandas as pd
+from flask import Flask, render_template, request
 
-from sklearn.preprocessing import StandardScaler
-from src.pipeline.predict_pipeline import CustomData,PredictPipeline
-from src.components.optimizer import PredictsOptimizer,Optimizer
+from src.models.optimizer import Optimizer
 
-application=Flask(__name__)
+application = Flask(__name__)
 
-app=application
+app = application
 
-## Route for a home page
 
 @app.route('/')
 def index():
-    return render_template('index.html') 
+    return render_template('index.html')
 
-@app.route('/predictdata',methods=['GET','POST'])
+
+@app.route('/predictdata', methods=['GET', 'POST'])
 def predict_datapoint():
-    if request.method=='GET':
+    if request.method == 'GET':
         return render_template('home.html')
     else:
-        data=Optimizer(
+        data = Optimizer(
             chromasity=float(request.form.get('chromasity')),
             feculence=float(request.form.get('feculence')),
             ph=float(request.form.get('ph')),
@@ -36,15 +32,15 @@ def predict_datapoint():
             permanganate=float(request.form.get('permanganate'))
 
         )
-        pred_df=data.get_weights_and_features()
+        pred_df = data.get_weights_and_features()
         print(pred_df)
         print("Before Prediction")
 
         results_ = data.predict(pred_df)
         print("Mid Prediction")
         print("after Prediction: ", results_)
-        return render_template('home.html',results=results_)
-    
+        return render_template('home.html', results=results_)
 
-if __name__=="__main__":
-    app.run(host="0.0.0.0", debug=True)    
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
