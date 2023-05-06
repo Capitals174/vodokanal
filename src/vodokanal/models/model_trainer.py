@@ -11,9 +11,9 @@ from sklearn.ensemble import (
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import accuracy_score
 
-from src.exceptions import CustomException
-from src.logger import logging
-from src.utils import evaluate_models, save_object
+from src import CustomException
+from vodokanal.logger import logging
+from vodokanal.utils import evaluate_models, save_object
 
 
 @dataclass

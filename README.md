@@ -1,0 +1,4 @@
+vodokanal
+==============================
+
+`pip install ./src`

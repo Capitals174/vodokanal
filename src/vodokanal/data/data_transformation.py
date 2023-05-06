@@ -9,9 +9,9 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-from src.exceptions import CustomException
-from src.logger import logging
-from src.utils import save_object
+from src import CustomException
+from vodokanal.logger import logging
+from vodokanal.utils import save_object
 
 
 @dataclass
