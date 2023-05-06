@@ -5,10 +5,10 @@ from dataclasses import dataclass
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from src.data.data_transformation import DataTransformation
-from src.exceptions import CustomException
-from src.logger import logging
-from src.models.model_trainer import ModelTrainer
+from vodokanal.data.data_transformation import DataTransformation
+from src import CustomException
+from vodokanal.logger import logging
+from vodokanal.models.model_trainer import ModelTrainer
 
 
 @dataclass
@@ -17,7 +17,7 @@ class DataIngestionConfig:
     train_data_path: str = os.path.join('data', 'processed', 'train.csv')
     test_data_path: str = os.path.join('data', 'processed', 'test.csv')
     source_data_path: str = os.path.join(
-        '..', '..', 'data', 'raw', 'data_new_v1.xlsx'
+        '../..', '..', 'data', 'raw', 'data_new_v1.xlsx'
     )
 
 
