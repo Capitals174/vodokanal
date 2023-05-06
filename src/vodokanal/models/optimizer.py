@@ -3,7 +3,7 @@ import sys
 import numpy as np
 import pandas as pd
 
-from src import CustomException
+from vodokanal.exceptions import CustomException
 from vodokanal.models.predict_pipeline import PredictPipeline
 
 

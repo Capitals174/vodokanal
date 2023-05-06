@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from vodokanal.data.data_transformation import DataTransformation
-from src import CustomException
+from vodokanal.exceptions import CustomException
 from vodokanal.logger import logging
 from vodokanal.models.model_trainer import ModelTrainer
 

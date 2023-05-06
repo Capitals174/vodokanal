@@ -3,7 +3,7 @@ import sys
 
 import pandas as pd
 
-from src import CustomException
+from vodokanal.exceptions import CustomException
 from vodokanal.utils import load_object
 
 

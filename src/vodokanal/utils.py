@@ -5,7 +5,7 @@ import sys
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
 
-from src import CustomException
+from vodokanal.exceptions import CustomException
 
 
 def save_object(file_path, obj):
