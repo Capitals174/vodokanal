@@ -5,5 +5,13 @@ skip-string-normalization = true
 [flake8]
 max-line-length = 80
 
-[tool.pylint]
-max-line-length=80
+[tool.pylint.'MASTER']
+disable = [
+    'C0114',  # Missing module docstring
+    'W0613',  # Unused argument
+    'W1203',  # Use % formatting in logging functions
+    'R0913',  # Too many arguments
+]
+
+[tool.pylint.'FORMAT']
+max-line-length = 80
