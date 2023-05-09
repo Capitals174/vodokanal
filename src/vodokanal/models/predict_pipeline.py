@@ -8,7 +8,6 @@ from vodokanal.utils import load_object
 
 
 class PredictPipeline:
-
     def __init__(self):
         pass
 
@@ -29,7 +28,6 @@ class PredictPipeline:
 
 
 class CustomData:
-
     def __init__(
         self,
         chromasity: int,
@@ -45,7 +43,6 @@ class CustomData:
         sa: int,
         permanganate: int,
     ):
-
         self.chromasity = chromasity
         self.feculence = feculence
         self.ph = ph

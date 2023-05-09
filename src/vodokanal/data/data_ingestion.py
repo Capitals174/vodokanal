@@ -22,8 +22,7 @@ class DataIngestionConfig:
 
 
 class DataIngestion:
-
-    def __init__(self):
+    def __init__(self, data):
         self.ingestion_config = DataIngestionConfig()
 
     def initiate_data_ingestion(self):
@@ -34,7 +33,7 @@ class DataIngestion:
 
             os.makedirs(
                 os.path.dirname(self.ingestion_config.train_data_path),
-                exist_ok=True
+                exist_ok=True,
             )
 
             df.to_csv(
@@ -57,7 +56,7 @@ class DataIngestion:
 
             return (
                 self.ingestion_config.train_data_path,
-                self.ingestion_config.test_data_path
+                self.ingestion_config.test_data_path,
             )
 
         except CustomException as e:

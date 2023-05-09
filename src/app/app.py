@@ -29,8 +29,7 @@ def predict_datapoint():
             PAA_kk=float(request.form.get('PAA_kk')),
             PAA_f=float(request.form.get('PAA_f')),
             sa=float(request.form.get('sa')),
-            permanganate=float(request.form.get('permanganate'))
-
+            permanganate=float(request.form.get('permanganate')),
         )
         pred_df = data.get_weights_and_features()
         print(pred_df)
