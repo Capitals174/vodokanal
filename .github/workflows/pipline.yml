@@ -28,11 +28,11 @@ jobs:
         run: |
           pylint src --fail-under=5 --rcfile=src/pyproject.toml $(git ls-files '*.py')
 
-      - name: Run pytest
-        run: pytest tests/
-
       - name: Run Black
         run: black --check --config src/pyproject.toml src/
 
       - name: Run isort
         run: isort src --check-only --settings-path src/pyproject.toml
+
+      - name: Run pytest
+        run: pytest tests/
