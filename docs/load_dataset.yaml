@@ -1,0 +1,10 @@
+DataLoader:
+  summary: класс загрузки исходного файла в формате excel и преобразование его
+  в csv для последующей обработки
+
+
+DataLoaderConfig:
+  summary: конфиг для класса DataLoader
+  parameters:
+    raw_data_path: путь к исходному файлу
+    interim_data_path: путь, куда сохраняется загруженный датасет
