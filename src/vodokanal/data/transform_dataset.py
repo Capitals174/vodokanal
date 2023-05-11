@@ -3,19 +3,7 @@ import sys
 from dataclasses import dataclass
 
 import pandas as pd
-import logging
-from sklearn.model_selection import train_test_split
 from src.vodokanal.exceptions import CustomException
-
-from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-
-# from vodokanal.data.data_transformation import DataTransformation
-# from vodokanal.exceptions import CustomException
-# from vodokanal.logger import logging
-# from vodokanal.models.model_trainer import ModelTrainer
 
 
 @dataclass
