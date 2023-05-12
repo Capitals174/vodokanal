@@ -40,7 +40,7 @@ class DataLoader:
 
         except CustomException as e:
             raise CustomException(e, sys)
-
-if __name__ == '__main__':
-    obj = DataLoader()
-    load_data = obj.load_data()
+#
+# if __name__ == '__main__':
+#     obj = DataLoader()
+#     load_data = obj.load_data()

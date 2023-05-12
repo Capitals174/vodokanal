@@ -3,8 +3,8 @@ import sys
 
 import pandas as pd
 
-from vodokanal.exceptions import CustomException
-from vodokanal.utils import load_object
+from src.vodokanal.exceptions import CustomException
+from src.vodokanal.utils import load_object
 
 
 class PredictPipeline:
