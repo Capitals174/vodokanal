@@ -43,6 +43,7 @@ def _get_data_transformer_object():
     except Exception as e:
         raise CustomException(e, sys)
 
+
 def _preprocessing(input_data_path, preprocessor_path):
     preprocessing_obj = _get_data_transformer_object()
     df = pd.read_csv(input_data_path)
@@ -171,6 +172,7 @@ def train_model(input_data_path, preprocessor_path, model_path):
 
     except Exception as e:
         raise CustomException(e, sys)
+
 
 if __name__ == '__main__':
     train_model()

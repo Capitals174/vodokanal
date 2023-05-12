@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 from src.vodokanal.exceptions import CustomException
-from src.vodokanal.models.predict_pipeline import PredictPipeline
+from src.vodokanal.models.predict_pipeline import predict
 
 
 def cartesian(arrays, out=None):
@@ -63,9 +63,9 @@ class Optimizer:
 
     def predict(self, pred_df):
         try:
-            predict_pipeline = PredictPipeline()
+
             print("Mid Prediction")
-            results = predict_pipeline.predict(pred_df)
+            results = predict(pred_df)
             print("after Prediction: ", results)
             # preds = model.predict(self.get_weights_and_features())
             pred_df['pred'] = results

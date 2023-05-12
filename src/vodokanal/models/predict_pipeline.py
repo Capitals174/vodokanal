@@ -1,11 +1,12 @@
 import os
 import sys
-import click
 
+import click
 import pandas as pd
 
 from src.vodokanal.exceptions import CustomException
 from src.vodokanal.utils import load_object
+
 
 @click.command()
 @click.option(
@@ -92,6 +93,7 @@ class CustomData:
 
         except Exception as e:
             raise CustomException(e, sys)
+
 
 if __name__ == '__main__':
     predict()
