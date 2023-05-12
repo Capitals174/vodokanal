@@ -1,27 +1,27 @@
+import logging
 import os
 import sys
-import logging
 
+import constants
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.impute import SimpleImputer
-from sklearn.compose import ColumnTransformer
-
 from catboost import CatBoostClassifier
+from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import (
     AdaBoostClassifier,
     GradientBoostingClassifier,
     RandomForestClassifier,
 )
+from sklearn.impute import SimpleImputer
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import precision_score
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 
 from src.vodokanal.exceptions import CustomException
-from src.vodokanal.utils import save_object, evaluate_models
-import constants
+from src.vodokanal.utils import evaluate_models, save_object
+
 
 class ModelCreationConfig:
     source_data_path: str = os.path.join(
@@ -30,9 +30,7 @@ class ModelCreationConfig:
     preprocessor_obj_file_path = os.path.join(
         '../..', '..', 'models', "preprocessor.pkl"
     )
-    trained_model_file_path = os.path.join(
-        '../..', '..', 'models', "model.pkl"
-    )
+    trained_model_file_path = os.path.join('../..', '..', 'models', "model.pkl")
 
 
 class CreateModel:
@@ -62,9 +60,7 @@ class CreateModel:
     def preprocessing(self):
         preprocessing_obj = self._get_data_transformer_object()
         df = pd.read_csv(self.model_config.source_data_path)
-        train_df, test_df = train_test_split(
-            df, test_size=0.2, random_state=69
-        )
+        train_df, test_df = train_test_split(df, test_size=0.2, random_state=69)
         target_column_name = "quality"
 
         input_feature_train_df = train_df.drop(
@@ -99,16 +95,14 @@ class CreateModel:
         logging.info("Saved preprocessing object.")
 
         save_object(
-            file_path=(
-                self.model_config.preprocessor_obj_file_path
-            ),
+            file_path=(self.model_config.preprocessor_obj_file_path),
             obj=preprocessing_obj,
         )
 
         return (
             train_arr,
             test_arr,
-            #self.model_config.preprocessor_obj_file_path,
+            # self.model_config.preprocessor_obj_file_path,
         )
 
     def train_model(self, train_array, test_array):

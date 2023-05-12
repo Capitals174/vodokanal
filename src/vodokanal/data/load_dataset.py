@@ -1,10 +1,12 @@
+import logging
 import os
 import sys
 from dataclasses import dataclass
-import logging
-from src.vodokanal.exceptions import CustomException
 
 import pandas as pd
+
+from src.vodokanal.exceptions import CustomException
+
 
 class DataLoaderConfig:
     interim_data_path: str = os.path.join(
@@ -31,8 +33,9 @@ class DataLoader:
             )
 
             df.to_csv(
-                self.ingestion_config.interim_data_path, index=False,
-                header=True
+                self.ingestion_config.interim_data_path,
+                index=False,
+                header=True,
             )
             logging.info('Loading data completed')
 
@@ -40,6 +43,8 @@ class DataLoader:
 
         except CustomException as e:
             raise CustomException(e, sys)
+
+
 #
 # if __name__ == '__main__':
 #     obj = DataLoader()

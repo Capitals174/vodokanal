@@ -3,6 +3,7 @@ import sys
 from dataclasses import dataclass
 
 import pandas as pd
+
 from src.vodokanal.exceptions import CustomException
 
 
@@ -26,13 +27,15 @@ class DataTransform:
             df = df.replace(',', '.', regex=True)
             df.fillna(0, inplace=True)
             df.iloc[::] = df.iloc[::].astype(float)
-            df.to_csv(self.transform_config.processed_data_path, index=False,
-                header=True)
+            df.to_csv(
+                self.transform_config.processed_data_path,
+                index=False,
+                header=True,
+            )
             return df
 
         except Exception as e:
             raise CustomException(e, sys)
-
 
         except Exception as e:
             raise CustomException(e, sys)
