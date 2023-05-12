@@ -3,8 +3,8 @@ import sys
 import numpy as np
 import pandas as pd
 
-from vodokanal.exceptions import CustomException
-from vodokanal.models.predict_pipeline import PredictPipeline
+from src.vodokanal.exceptions import CustomException
+from src.vodokanal.models.predict_pipeline import PredictPipeline
 
 
 def cartesian(arrays, out=None):
