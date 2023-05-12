@@ -63,7 +63,6 @@ class Optimizer:
 
     def predict(self, pred_df):
         try:
-
             print("Mid Prediction")
             results = predict(pred_df)
             print("after Prediction: ", results)
