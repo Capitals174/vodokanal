@@ -1,32 +1,45 @@
 import os
 import sys
+import click
 
 import pandas as pd
 
 from src.vodokanal.exceptions import CustomException
 from src.vodokanal.utils import load_object
 
+@click.command()
+@click.option(
+    '--data',
+    required=True,
+    type=click.Path(exists=True),
+    prompt='Specify input path',
+    help='Path to input data file for prediction',
+)
+@click.option(
+    '--preprocessor_path',
+    required=True,
+    type=click.Path(),
+    prompt='Specify input path',
+    help='Path to preprocessor',
+)
+@click.option(
+    '--model_path',
+    required=True,
+    type=click.Path(),
+    prompt='Specify input path',
+    help='Path to trained model',
+)
+def predict(data, model_path, preprocessor_path):
+    try:
+        model = load_object(file_path=model_path)
+        preprocessor = load_object(file_path=preprocessor_path)
+        print("After Loading")
+        data_scaled = preprocessor.transform(data)
+        preds = model.predict(data_scaled)
+        return preds
 
-class PredictPipeline:
-    def __init__(self):
-        pass
-
-    def predict(self, features):
-        try:
-            model_path = os.path.join('../..', '..', 'models', "model.pkl")
-            preprocessor_path = os.path.join(
-                '../..', '..', 'models', "preprocessor.pkl"
-            )
-            print("Before Loading")
-            model = load_object(file_path=model_path)
-            preprocessor = load_object(file_path=preprocessor_path)
-            print("After Loading")
-            data_scaled = preprocessor.transform(features)
-            preds = model.predict(data_scaled)
-            return preds
-
-        except Exception as e:
-            raise CustomException(e, sys)
+    except Exception as e:
+        raise CustomException(e, sys)
 
 
 class CustomData:
@@ -79,3 +92,6 @@ class CustomData:
 
         except Exception as e:
             raise CustomException(e, sys)
+
+if __name__ == '__main__':
+    predict()

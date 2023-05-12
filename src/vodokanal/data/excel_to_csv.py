@@ -1,3 +1,5 @@
+import logging
+import os
 import sys
 
 import click
@@ -21,22 +23,28 @@ from src.vodokanal.exceptions import CustomException
     prompt='Specify output path',
     help='Path to save output data file',
 )
-def data_transformation(input_data_path, output_data_path):
+def excel_to_csv(input_data_path, output_data_path):
+    logging.info('Entering data ingestion')
     try:
-        df = pd.read_csv(input_data_path)
-        df = df.replace(',', '.', regex=True)
-        df.fillna(0, inplace=True)
-        df.iloc[::] = df.iloc[::].astype(float)
+        df = pd.read_excel(input_data_path)
+        logging.info('Reading data')
+
+        os.makedirs(
+            os.path.dirname(output_data_path),
+            exist_ok=True,
+        )
         df.to_csv(
             output_data_path,
             index=False,
             header=True,
         )
+        logging.info('Loading data completed')
+
         return df
 
-    except Exception as e:
+    except CustomException as e:
         raise CustomException(e, sys)
 
 
 if __name__ == '__main__':
-    data_transformation()
+    excel_to_csv()
