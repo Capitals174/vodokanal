@@ -77,8 +77,7 @@ class Optimizer:
                     + (df_true['paa_kk'] + df_true['paa_f']) * 100000
                 )
                 return df_true.sort_values(by='cost').iloc[0, -6:].tolist()
-            else:
-                return 0
+            return 0
 
         except Exception as e:
             raise CustomException(e, sys)
