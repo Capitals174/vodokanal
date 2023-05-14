@@ -11,14 +11,14 @@ stages:
     - path: data\interim\raw.csv
       md5: e4fab6dcfba76c71d38cc15bd6536996
       size: 15645
-  transform_dataset:
-    cmd: python src\vodokanal\data\transform_dataset.py --input_data_path data\interim\raw.csv
-      --output_data_path data\processed\processed.csv
+  data_normalization:
+    cmd: python src\vodokanal\data\data_normalization.py --input_data_path data\interim\raw.csv
+      --output_data_path data\processed\raw_normalized.csv
     deps:
     - path: data\interim\raw.csv
       md5: e4fab6dcfba76c71d38cc15bd6536996
       size: 15645
     outs:
-    - path: data\processed\processed.csv
+    - path: data\processed\raw_normalized.csv
       md5: 389c354a1c4ed79b6c33d1a5c5a94581
       size: 18366

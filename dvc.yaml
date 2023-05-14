@@ -8,11 +8,11 @@ stages:
     outs:
       - data\interim\raw.csv
 
-  transform_dataset:
+  data_normalization:
     deps:
       - data\interim\raw.csv
-    cmd: python src\vodokanal\data\transform_dataset.py
+    cmd: python src\vodokanal\data\data_normalization.py
       --input_data_path data\interim\raw.csv
-      --output_data_path data\processed\processed.csv
+      --output_data_path data\processed\raw_normalized.csv
     outs:
-      - data\processed\processed.csv
+      - data\processed\raw_normalized.csv

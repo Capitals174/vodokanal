@@ -21,7 +21,7 @@ from vodokanal.exceptions import CustomException
     prompt='Specify output path',
     help='Path to save output data file',
 )
-def data_transformation(input_data_path, output_data_path):
+def data_normalization(input_data_path, output_data_path):
     try:
         df = pd.read_csv(input_data_path)
         df = df.replace(',', '.', regex=True)
@@ -39,4 +39,4 @@ def data_transformation(input_data_path, output_data_path):
 
 
 if __name__ == '__main__':
-    data_transformation()
+    data_normalization()

@@ -1,5 +1,6 @@
 [core]
     remote = minio
+    autostage = true
 ['remote "minio"']
     url = s3://vodokanal
     endpointurl = http://194.67.125.183:9000
