@@ -19,8 +19,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-from src.vodokanal.exceptions import CustomException
-from src.vodokanal.utils import evaluate_models, save_object
+from vodokanal.exceptions import CustomException
+from vodokanal.utils import evaluate_models, save_object
 
 
 def _get_data_transformer_object():

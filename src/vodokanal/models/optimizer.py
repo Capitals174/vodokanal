@@ -3,8 +3,8 @@ import sys
 import numpy as np
 import pandas as pd
 
-from src.vodokanal.exceptions import CustomException
-from src.vodokanal.models.predict_pipeline import predict
+from vodokanal.exceptions import CustomException
+from vodokanal.models.predict_pipeline import predict
 
 
 def cartesian(arrays, out=None):
@@ -93,7 +93,9 @@ class Optimizer:
                 "sa": [self.sa],
                 "permanganate": [self.permanganate],
             }
+
             df = pd.read_excel(raw_file_path)
+
             df_feature = pd.DataFrame(custom_data_input_dict)
             w_pm = np.arange(
                 df['permanganate'].min(),
