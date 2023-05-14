@@ -22,3 +22,17 @@ stages:
     - path: data\processed\raw_normalized.csv
       md5: 389c354a1c4ed79b6c33d1a5c5a94581
       size: 18366
+  create_model:
+    cmd: python src\vodokanal\models\create_model.py --input_data_path data\processed\raw_normalized.csv
+      --preprocessor_path models\preprocessor.pkl --model_path models\model.pkl
+    deps:
+    - path: data\processed\raw_normalized.csv
+      md5: 389c354a1c4ed79b6c33d1a5c5a94581
+      size: 18366
+    - path: models\preprocessor.pkl
+      md5: eda05620125ad9aaac2250f2298daf63
+      size: 2088
+    outs:
+    - path: models\model.pkl
+      md5: 59aa51b8ea3bd0a21ff8208db1c6a41f
+      size: 1097070
