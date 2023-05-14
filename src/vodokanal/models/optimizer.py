@@ -98,7 +98,7 @@ class Optimizer:
                 "sa": [self.sa],
                 "permanganate": [self.permanganate],
             }
-            df = pd.read_excel('data/raw/data_new_v1.xlsx')
+            df = pd.read_excel('data/raw/raw.xlsx')
             df_feature = pd.DataFrame(custom_data_input_dict)
             w_pm = np.arange(
                 df['permanganate'].min(),
