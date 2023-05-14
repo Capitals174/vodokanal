@@ -20,23 +20,10 @@ stages:
   create_model:
     deps:
       - data\processed\raw_normalized.csv
-      - models\preprocessor.pkl
     cmd: python src\vodokanal\models\create_model.py
       --input_data_path data\processed\raw_normalized.csv
       --preprocessor_path models\preprocessor.pkl
       --model_path models\model.pkl
     outs:
-      - models\model.pkl
-
-  predict_pipeline:
-    deps:
-      - data\processed\raw_normalized.csv
       - models\preprocessor.pkl
       - models\model.pkl
-    cmd: python src\vodokanal\models\predict_pipeline.py
-      --data data\processed\raw_normalized.csv
-      --preprocessor_path models\preprocessor.pkl
-      --model_path models\model.pkl
-      --predictions_path data\external\preds.csv
-    outs:
-      - data\external\preds.csv

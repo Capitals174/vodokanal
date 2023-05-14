@@ -29,10 +29,10 @@ stages:
     - path: data\processed\raw_normalized.csv
       md5: 389c354a1c4ed79b6c33d1a5c5a94581
       size: 18366
+    outs:
+    - path: models\model.pkl
+      md5: 6aa0695accc19f0ff22ccbcc9000b145
+      size: 139312
     - path: models\preprocessor.pkl
       md5: eda05620125ad9aaac2250f2298daf63
       size: 2088
-    outs:
-    - path: models\model.pkl
-      md5: 59aa51b8ea3bd0a21ff8208db1c6a41f
-      size: 1097070
