@@ -95,7 +95,7 @@ class Optimizer:
             }
 
             df = pd.read_excel(raw_file_path)
-            
+
             df_feature = pd.DataFrame(custom_data_input_dict)
             w_pm = np.arange(
                 df['permanganate'].min(),
