@@ -3,7 +3,7 @@ import sys
 import click
 import pandas as pd
 
-from src.vodokanal.exceptions import CustomException
+from vodokanal.exceptions import CustomException
 
 
 @click.command()

@@ -1,0 +1,24 @@
+schema: '2.0'
+stages:
+  excel_to_csv:
+    cmd: python src\vodokanal\data\excel_to_csv.py --input_data_path data\raw\raw.xlsx
+      --output_data_path data\interim\raw.csv
+    deps:
+    - path: data\raw\raw.xlsx
+      md5: 93a5a59225863180ab5734b82dcafec3
+      size: 30811
+    outs:
+    - path: data\interim\raw.csv
+      md5: e4fab6dcfba76c71d38cc15bd6536996
+      size: 15645
+  transform_dataset:
+    cmd: python src\vodokanal\data\transform_dataset.py --input_data_path data\interim\raw.csv
+      --output_data_path data\processed\processed.csv
+    deps:
+    - path: data\interim\raw.csv
+      md5: e4fab6dcfba76c71d38cc15bd6536996
+      size: 15645
+    outs:
+    - path: data\processed\processed.csv
+      md5: 389c354a1c4ed79b6c33d1a5c5a94581
+      size: 18366

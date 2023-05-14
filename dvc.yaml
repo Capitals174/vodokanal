@@ -1,0 +1,18 @@
+stages:
+  excel_to_csv:
+    deps:
+      - data\raw\raw.xlsx
+    cmd: python src\vodokanal\data\excel_to_csv.py
+      --input_data_path data\raw\raw.xlsx
+      --output_data_path data\interim\raw.csv
+    outs:
+      - data\interim\raw.csv
+
+  transform_dataset:
+    deps:
+      - data\interim\raw.csv
+    cmd: python src\vodokanal\data\transform_dataset.py
+      --input_data_path data\interim\raw.csv
+      --output_data_path data\processed\processed.csv
+    outs:
+      - data\processed\processed.csv
