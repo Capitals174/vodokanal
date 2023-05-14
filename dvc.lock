@@ -1,38 +1,38 @@
 schema: '2.0'
 stages:
   excel_to_csv:
-    cmd: python src\vodokanal\data\excel_to_csv.py --input_data_path data\raw\raw.xlsx
-      --output_data_path data\interim\raw.csv
+    cmd: python src/vodokanal/data/excel_to_csv.py --input_data_path data/raw/raw.xlsx
+      --output_data_path data/interim/raw.csv
     deps:
-    - path: data\raw\raw.xlsx
+    - path: data/raw/raw.xlsx
       md5: 93a5a59225863180ab5734b82dcafec3
       size: 30811
     outs:
-    - path: data\interim\raw.csv
+    - path: data/interim/raw.csv
       md5: e4fab6dcfba76c71d38cc15bd6536996
-      size: 15645
+      size: 15340
   data_normalization:
-    cmd: python src\vodokanal\data\data_normalization.py --input_data_path data\interim\raw.csv
-      --output_data_path data\processed\raw_normalized.csv
+    cmd: python src/vodokanal/data/data_normalization.py --input_data_path data/interim/raw.csv
+      --output_data_path data/processed/raw_normalized.csv
     deps:
-    - path: data\interim\raw.csv
+    - path: data/interim/raw.csv
       md5: e4fab6dcfba76c71d38cc15bd6536996
       size: 15645
     outs:
-    - path: data\processed\raw_normalized.csv
+    - path: data/processed/raw_normalized.csv
       md5: 389c354a1c4ed79b6c33d1a5c5a94581
-      size: 18366
+      size: 18061
   create_model:
-    cmd: python src\vodokanal\models\create_model.py --input_data_path data\processed\raw_normalized.csv
-      --preprocessor_path models\preprocessor.pkl --model_path models\model.pkl
+    cmd: python src/vodokanal/models/create_model.py --input_data_path data/processed/raw_normalized.csv
+      --preprocessor_path models/preprocessor.pkl --model_path models/model.pkl
     deps:
-    - path: data\processed\raw_normalized.csv
+    - path: data/processed/raw_normalized.csv
       md5: 389c354a1c4ed79b6c33d1a5c5a94581
       size: 18366
     outs:
-    - path: models\model.pkl
-      md5: 6aa0695accc19f0ff22ccbcc9000b145
-      size: 139312
-    - path: models\preprocessor.pkl
+    - path: models/model.pkl
+      md5: 3273dfe798bcdf7c303c7f2b04c6705c
+      size: 544101
+    - path: models/preprocessor.pkl
       md5: eda05620125ad9aaac2250f2298daf63
       size: 2088
