@@ -27,11 +27,6 @@ def cartesian(arrays, out=None):
     return out.tolist()
 
 
-class PredictsOptimizer:
-    def __init__(self):
-        pass
-
-
 class Optimizer:
     def __init__(
         self,
@@ -61,15 +56,15 @@ class Optimizer:
         self.sa = sa
         self.permanganate = permanganate
 
-    def predict(self, pred_df):
+    def predict(self, data, model_path, preprocessor_path):
         try:
             print("Mid Prediction")
-            results = predict(pred_df)
+            results = predict(data, model_path, preprocessor_path)
             print("after Prediction: ", results)
             # preds = model.predict(self.get_weights_and_features())
-            pred_df['pred'] = results
-            if (pred_df['pred'] == 1).any():
-                df_true = pred_df[pred_df['pred'] == 1]
+            data['pred'] = results
+            if (data['pred'] == 1).any():
+                df_true = data[data['pred'] == 1]
 
                 df_true['cost'] = (
                     df_true['sa'] * 17150
@@ -82,7 +77,7 @@ class Optimizer:
         except Exception as e:
             raise CustomException(e, sys)
 
-    def get_weights_and_features(self):
+    def get_weights_and_features(self, raw_file_path):
         try:
             custom_data_input_dict = {
                 "chromasity": [self.chromasity],
@@ -98,7 +93,9 @@ class Optimizer:
                 "sa": [self.sa],
                 "permanganate": [self.permanganate],
             }
-            df = pd.read_excel('data/raw/raw.xlsx')
+
+            df = pd.read_excel(raw_file_path)
+            
             df_feature = pd.DataFrame(custom_data_input_dict)
             w_pm = np.arange(
                 df['permanganate'].min(),
