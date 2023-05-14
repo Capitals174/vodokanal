@@ -3,8 +3,8 @@ import sys
 import numpy as np
 import pandas as pd
 
-from vodokanal.exceptions import CustomException
-from vodokanal.models.predict_pipeline import PredictPipeline
+from src.vodokanal.exceptions import CustomException
+from src.vodokanal.models.predict_pipeline import predict
 
 
 def cartesian(arrays, out=None):
@@ -63,9 +63,8 @@ class Optimizer:
 
     def predict(self, pred_df):
         try:
-            predict_pipeline = PredictPipeline()
             print("Mid Prediction")
-            results = predict_pipeline.predict(pred_df)
+            results = predict(pred_df)
             print("after Prediction: ", results)
             # preds = model.predict(self.get_weights_and_features())
             pred_df['pred'] = results
@@ -78,8 +77,7 @@ class Optimizer:
                     + (df_true['paa_kk'] + df_true['paa_f']) * 100000
                 )
                 return df_true.sort_values(by='cost').iloc[0, -6:].tolist()
-            else:
-                return 0
+            return 0
 
         except Exception as e:
             raise CustomException(e, sys)

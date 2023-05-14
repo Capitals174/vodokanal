@@ -2,10 +2,10 @@ import os
 import pickle
 import sys
 
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
 from sklearn.model_selection import GridSearchCV
 
-from vodokanal.exceptions import CustomException
+from src.vodokanal.exceptions import CustomException
 
 
 def save_object(file_path, obj):
@@ -36,7 +36,7 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
             model.fit(X_train, y_train)
 
             y_test_pred = model.predict(X_test)
-            test_model_score = accuracy_score(y_test, y_test_pred)
+            test_model_score = precision_score(y_test, y_test_pred)
 
             report[list(models.keys())[i]] = test_model_score
 
