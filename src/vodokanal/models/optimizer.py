@@ -26,6 +26,7 @@ def cartesian(arrays, out=None):
             out[j * m : (j + 1) * m, 1:] = out[0:m, 1:]  # noqa
     return out.tolist()
 
+
 class Optimizer:
     def __init__(
         self,
