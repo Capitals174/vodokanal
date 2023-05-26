@@ -1,7 +1,7 @@
 FROM python:3.9
 
 WORKDIR service
-COPY src/service /service
+COPY . /service
 
 RUN pip install uvicorn
 RUN pip install uvicorn[standard]
