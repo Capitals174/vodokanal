@@ -5,8 +5,6 @@ COPY src/service /service
 
 RUN pip install uvicorn
 RUN pip install uvicorn[standard]
-RUN pip3 install -r /service/requirements.txt
+RUN pip3 install -r requirements.txt
 
-EXPOSE 8080
-
-CMD ["uvicorn", "service:app", "--reload", "--port", "8080"]
+CMD ["uvicorn", "service:app", "--host", "0.0.0.0", "--port", "8080"]
