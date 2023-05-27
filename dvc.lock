@@ -7,10 +7,13 @@ stages:
     - path: data/raw/raw.xlsx
       md5: 93a5a59225863180ab5734b82dcafec3
       size: 30811
+    - path: src/vodokanal/data/excel_to_csv.py
+      md5: 4f79775a4aed0e9c6b5dcab598e372a2
+      size: 1102
     outs:
     - path: data/interim/raw.csv
       md5: e4fab6dcfba76c71d38cc15bd6536996
-      size: 15340
+      size: 15645
   data_normalization:
     cmd: python src/vodokanal/data/data_normalization.py --input_data_path data/interim/raw.csv
       --output_data_path data/processed/raw_normalized.csv
@@ -18,10 +21,13 @@ stages:
     - path: data/interim/raw.csv
       md5: e4fab6dcfba76c71d38cc15bd6536996
       size: 15645
+    - path: src/vodokanal/data/data_normalization.py
+      md5: 793f936d34bdb3d232739bc68c4a7e4d
+      size: 967
     outs:
     - path: data/processed/raw_normalized.csv
       md5: 389c354a1c4ed79b6c33d1a5c5a94581
-      size: 18061
+      size: 18366
   create_model:
     cmd: python src/vodokanal/models/create_model.py --input_data_path data/processed/raw_normalized.csv
       --preprocessor_path models/preprocessor.pkl --model_path models/model.pkl
@@ -29,10 +35,13 @@ stages:
     - path: data/processed/raw_normalized.csv
       md5: 389c354a1c4ed79b6c33d1a5c5a94581
       size: 18366
+    - path: src/vodokanal/models/create_model.py
+      md5: b4c3f5e84d2ae5aeb9b13b8f76f3ad30
+      size: 5476
     outs:
     - path: models/model.pkl
-      md5: 3273dfe798bcdf7c303c7f2b04c6705c
-      size: 544101
+      md5: fc658ac63775e5be284ff18aaf61fc16
+      size: 264647
     - path: models/preprocessor.pkl
       md5: eda05620125ad9aaac2250f2298daf63
       size: 2088

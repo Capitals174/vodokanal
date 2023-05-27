@@ -112,17 +112,24 @@ def train_model(input_data_path, preprocessor_path, model_path):
             train_array[:, :-1],
             train_array[:, -1],
             test_array[:, :-1],
-            test_array[:, -1],
+            test_array[:, -1]
         )
         models = {
-            "Random Forest": RandomForestClassifier(),
-            "Gradient Boosting": GradientBoostingClassifier(),
-            "Linear Classifier": SGDClassifier(),
-            "CatBoosting Classifier": CatBoostClassifier(verbose=False),
-            "AdaBoost Classifier": AdaBoostClassifier(),
+            "Random Forest":
+                RandomForestClassifier(random_state=0),
+            "Gradient Boosting":
+                GradientBoostingClassifier(random_state=0),
+            "Linear Classifier":
+                SGDClassifier(random_state=0),
+            "CatBoosting Classifier":
+                CatBoostClassifier(verbose=False, random_state=0),
+            "AdaBoost Classifier":
+                AdaBoostClassifier(random_state=0),
         }
         params = {
-            "Random Forest": {'n_estimators': [128, 256]},
+            "Random Forest": {
+                'n_estimators': [128, 256]
+            },
             "Gradient Boosting": {
                 'learning_rate': [0.1, 0.001],
                 'subsample': [0.8, 0.85, 0.9],
