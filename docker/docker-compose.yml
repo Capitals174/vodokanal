@@ -14,7 +14,7 @@ services:
     volumes:
       - postgres_data:/data/postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - postgres_network
 
@@ -63,11 +63,10 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
     command:
-      mlflow server
-      --backend-store-uri
-      postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}
-      --default-artifact-root
-      s3://${AWS_S3_BUCKET}/
+      mlflow server 
+      --backend-store-uri 
+      postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pg/${POSTGRES_DB}
+      --default-artifact-root s3://${AWS_S3_BUCKET}/
       --host 0.0.0.0
     ports:
       - "5000:5000"
