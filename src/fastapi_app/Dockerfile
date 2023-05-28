@@ -1,10 +1,11 @@
 FROM python:3.9
 
-WORKDIR service
-COPY . /service
-
 RUN pip install uvicorn
 RUN pip install uvicorn[standard]
-RUN pip3 install -r requirements.txt
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+WORKDIR fastapi_app
+COPY . /fastapi_app
 
 CMD ["uvicorn", "service:app", "--host", "0.0.0.0", "--port", "8080"]

@@ -3,9 +3,11 @@ import sys
 
 import click
 import constants
+import mlflow
 import numpy as np
 import pandas as pd
 from catboost import CatBoostClassifier
+from mlflow.models import infer_signature
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import (
     AdaBoostClassifier,
@@ -60,11 +62,19 @@ def _preprocessing(input_data_path, preprocessor_path):
         "Applying preprocessing object on training "
         "dataframe and testing dataframe."
     )
-
-    input_feature_train_arr = preprocessing_obj.fit_transform(
-        input_feature_train_df
-    )
-    input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
+    with mlflow.start_run(run_name="preprocessor"):
+        input_feature_train_arr = \
+            preprocessing_obj.fit_transform(input_feature_train_df)
+        input_feature_test_arr = \
+            preprocessing_obj.transform(input_feature_test_df)
+        mlflow.sklearn.log_model(
+            preprocessing_obj,
+            "model",
+            signature=infer_signature(
+                input_feature_train_df,
+                input_feature_train_arr
+            )
+        )
 
     train_arr = np.c_[
         input_feature_train_arr, np.array(target_feature_train_df)
