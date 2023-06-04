@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.3'
 
 services:
 
@@ -23,7 +23,7 @@ services:
     image: dpage/pgadmin4
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${POSTGRES_USER}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - pgadmin_data:/var/lib/pgadmin
@@ -72,21 +72,6 @@ services:
       - "5000:5000"
     networks:
       - postgres_network
-      - minio_network
-      - mlflow_network
-
-  fastapi_app:
-    build: ../src/fastapi_app
-    depends_on: [ mlflow ]
-    environment:
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_S3_BUCKET=${AWS_S3_BUCKET}
-      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
-      - MLFLOW_TRACKING_URI=http://mlflow:5000
-    ports:
-      - "80:8080"
-    networks:
       - minio_network
       - mlflow_network
 
