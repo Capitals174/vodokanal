@@ -63,17 +63,18 @@ def _preprocessing(input_data_path, preprocessor_path):
         "dataframe and testing dataframe."
     )
     with mlflow.start_run(run_name="preprocessor"):
-        input_feature_train_arr = \
-            preprocessing_obj.fit_transform(input_feature_train_df)
-        input_feature_test_arr = \
-            preprocessing_obj.transform(input_feature_test_df)
+        input_feature_train_arr = preprocessing_obj.fit_transform(
+            input_feature_train_df
+        )
+        input_feature_test_arr = preprocessing_obj.transform(
+            input_feature_test_df
+        )
         mlflow.sklearn.log_model(
             preprocessing_obj,
             "model",
             signature=infer_signature(
-                input_feature_train_df,
-                input_feature_train_arr
-            )
+                input_feature_train_df, input_feature_train_arr
+            ),
         )
 
     train_arr = np.c_[
@@ -122,24 +123,19 @@ def train_model(input_data_path, preprocessor_path, model_path):
             train_array[:, :-1],
             train_array[:, -1],
             test_array[:, :-1],
-            test_array[:, -1]
+            test_array[:, -1],
         )
         models = {
-            "Random Forest":
-                RandomForestClassifier(random_state=0),
-            "Gradient Boosting":
-                GradientBoostingClassifier(random_state=0),
-            "Linear Classifier":
-                SGDClassifier(random_state=0),
-            "CatBoosting Classifier":
-                CatBoostClassifier(verbose=False, random_state=0),
-            "AdaBoost Classifier":
-                AdaBoostClassifier(random_state=0),
+            "Random Forest": RandomForestClassifier(random_state=0),
+            "Gradient Boosting": GradientBoostingClassifier(random_state=0),
+            "Linear Classifier": SGDClassifier(random_state=0),
+            "CatBoosting Classifier": CatBoostClassifier(
+                verbose=False, random_state=0
+            ),
+            "AdaBoost Classifier": AdaBoostClassifier(random_state=0),
         }
         params = {
-            "Random Forest": {
-                'n_estimators': [128, 256]
-            },
+            "Random Forest": {'n_estimators': [128, 256]},
             "Gradient Boosting": {
                 'learning_rate': [0.1, 0.001],
                 'subsample': [0.8, 0.85, 0.9],
