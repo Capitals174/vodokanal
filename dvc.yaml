@@ -2,6 +2,7 @@ stages:
   excel_to_csv:
     deps:
       - data/raw/raw.xlsx
+      - src/vodokanal/data/excel_to_csv.py
     cmd: python src/vodokanal/data/excel_to_csv.py
       --input_data_path data/raw/raw.xlsx
       --output_data_path data/interim/raw.csv
@@ -11,6 +12,7 @@ stages:
   data_normalization:
     deps:
       - data/interim/raw.csv
+      - src/vodokanal/data/data_normalization.py
     cmd: python src/vodokanal/data/data_normalization.py
       --input_data_path data/interim/raw.csv
       --output_data_path data/processed/raw_normalized.csv
@@ -20,6 +22,7 @@ stages:
   create_model:
     deps:
       - data/processed/raw_normalized.csv
+      - src/vodokanal/models/create_model.py
     cmd: python src/vodokanal/models/create_model.py
       --input_data_path data/processed/raw_normalized.csv
       --preprocessor_path models/preprocessor.pkl

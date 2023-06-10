@@ -3,9 +3,11 @@ import sys
 
 import click
 import constants
+import mlflow
 import numpy as np
 import pandas as pd
 from catboost import CatBoostClassifier
+from mlflow.models import infer_signature
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import (
     AdaBoostClassifier,
@@ -60,11 +62,20 @@ def _preprocessing(input_data_path, preprocessor_path):
         "Applying preprocessing object on training "
         "dataframe and testing dataframe."
     )
-
-    input_feature_train_arr = preprocessing_obj.fit_transform(
-        input_feature_train_df
-    )
-    input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
+    with mlflow.start_run(run_name="preprocessor"):
+        input_feature_train_arr = preprocessing_obj.fit_transform(
+            input_feature_train_df
+        )
+        input_feature_test_arr = preprocessing_obj.transform(
+            input_feature_test_df
+        )
+        mlflow.sklearn.log_model(
+            preprocessing_obj,
+            "model",
+            signature=infer_signature(
+                input_feature_train_df, input_feature_train_arr
+            ),
+        )
 
     train_arr = np.c_[
         input_feature_train_arr, np.array(target_feature_train_df)
@@ -115,11 +126,13 @@ def train_model(input_data_path, preprocessor_path, model_path):
             test_array[:, -1],
         )
         models = {
-            "Random Forest": RandomForestClassifier(),
-            "Gradient Boosting": GradientBoostingClassifier(),
-            "Linear Classifier": SGDClassifier(),
-            "CatBoosting Classifier": CatBoostClassifier(verbose=False),
-            "AdaBoost Classifier": AdaBoostClassifier(),
+            "Random Forest": RandomForestClassifier(random_state=0),
+            "Gradient Boosting": GradientBoostingClassifier(random_state=0),
+            "Linear Classifier": SGDClassifier(random_state=0),
+            "CatBoosting Classifier": CatBoostClassifier(
+                verbose=False, random_state=0
+            ),
+            "AdaBoost Classifier": AdaBoostClassifier(random_state=0),
         }
         params = {
             "Random Forest": {'n_estimators': [128, 256]},
