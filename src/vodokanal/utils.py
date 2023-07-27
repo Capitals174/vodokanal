@@ -3,14 +3,8 @@ import pickle
 import sys
 
 import mlflow as mlflow
-import numpy as np
 from mlflow.models import infer_signature
-from sklearn.metrics import (
-    mean_absolute_error,
-    mean_squared_error,
-    precision_score,
-    r2_score,
-)
+from sklearn.metrics import f1_score, precision_score, recall_score
 from sklearn.model_selection import GridSearchCV
 
 from vodokanal.exceptions import CustomException
@@ -57,11 +51,9 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
                 mlflow.log_params(gs.best_params_)
                 mlflow.log_metrics(
                     {
-                        "rmse": np.sqrt(
-                            mean_squared_error(y_test, y_test_pred)
-                        ),
-                        "mae": mean_absolute_error(y_test, y_test_pred),
-                        "r2": r2_score(y_test, y_test_pred),
+                        "precision": precision_score(y_test, y_test_pred),
+                        "recall": recall_score(y_test, y_test_pred),
+                        "f1": f1_score(y_test, y_test_pred),
                     }
                 )
 

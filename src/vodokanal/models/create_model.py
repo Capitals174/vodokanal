@@ -93,25 +93,25 @@ def _preprocessing(input_data_path, preprocessor_path):
 
 @click.command()
 @click.option(
-    '--input_data_path',
+    "--input_data_path",
     required=True,
     type=click.Path(exists=True),
-    prompt='Specify input path',
-    help='Path to input data file',
+    prompt="Specify input path",
+    help="Path to input data file",
 )
 @click.option(
-    '--preprocessor_path',
+    "--preprocessor_path",
     required=True,
     type=click.Path(),
-    prompt='Specify output path',
-    help='Path to save preprocessor',
+    prompt="Specify output path",
+    help="Path to save preprocessor",
 )
 @click.option(
-    '--model_path',
+    "--model_path",
     required=True,
     type=click.Path(),
-    prompt='Specify output path',
-    help='Path to save trained model',
+    prompt="Specify output path",
+    help="Path to save trained model",
 )
 def train_model(input_data_path, preprocessor_path, model_path):
     try:
@@ -135,21 +135,21 @@ def train_model(input_data_path, preprocessor_path, model_path):
             "AdaBoost Classifier": AdaBoostClassifier(random_state=0),
         }
         params = {
-            "Random Forest": {'n_estimators': [128, 256]},
+            "Random Forest": {"n_estimators": [128, 256]},
             "Gradient Boosting": {
-                'learning_rate': [0.1, 0.001],
-                'subsample': [0.8, 0.85, 0.9],
-                'n_estimators': [128, 256],
+                "learning_rate": [0.1, 0.001],
+                "subsample": [0.8, 0.85, 0.9],
+                "n_estimators": [128, 256],
             },
             "Linear Classifier": {},
             "CatBoosting Classifier": {
-                'depth': [6, 10],
-                'learning_rate': [0.01, 0.1],
-                'iterations': [30, 100],
+                "depth": [6, 10],
+                "learning_rate": [0.01, 0.1],
+                "iterations": [30, 100],
             },
             "AdaBoost Classifier": {
-                'learning_rate': [0.1, 0.01],
-                'n_estimators': [64, 128, 256],
+                "learning_rate": [0.1, 0.01],
+                "n_estimators": [64, 128, 256],
             },
         }
 
@@ -171,7 +171,7 @@ def train_model(input_data_path, preprocessor_path, model_path):
 
         if best_model_score < 0.6:
             raise CustomException("No best model found")
-        logging.info('Best found model on both training and testing dataset')
+        logging.info("Best found model on both training and testing dataset")
 
         save_object(
             file_path=model_path,
@@ -187,5 +187,5 @@ def train_model(input_data_path, preprocessor_path, model_path):
         raise CustomException(e, sys)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     train_model()

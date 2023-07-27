@@ -9,32 +9,32 @@ from vodokanal.utils import load_object
 
 @click.command()
 @click.option(
-    '--data',
+    "--data",
     required=True,
     type=click.Path(exists=True),
-    prompt='Specify input path',
-    help='Path to input data file for prediction',
+    prompt="Specify input path",
+    help="Path to input data file for prediction",
 )
 @click.option(
-    '--preprocessor_path',
+    "--preprocessor_path",
     required=True,
     type=click.Path(),
-    prompt='Specify input path',
-    help='Path to preprocessor',
+    prompt="Specify input path",
+    help="Path to preprocessor",
 )
 @click.option(
-    '--model_path',
+    "--model_path",
     required=True,
     type=click.Path(),
-    prompt='Specify input path',
-    help='Path to trained model',
+    prompt="Specify input path",
+    help="Path to trained model",
 )
 @click.option(
-    '--predictions_path',
+    "--predictions_path",
     required=True,
     type=click.Path(),
-    prompt='Specify output path',
-    help='Path to prediction values',
+    prompt="Specify output path",
+    help="Path to prediction values",
 )
 def predict(data, model_path, preprocessor_path, predictions_path):
     try:
@@ -48,5 +48,5 @@ def predict(data, model_path, preprocessor_path, predictions_path):
         raise CustomException(e, sys)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     predict()
