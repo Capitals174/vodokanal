@@ -62,16 +62,16 @@ class Optimizer:
             results = predict(data, model_path, preprocessor_path)
             print("after Prediction: ", results)
             # preds = model.predict(self.get_weights_and_features())
-            data['pred'] = results
-            if (data['pred'] == 1).any():
-                df_true = data[data['pred'] == 1]
+            data["pred"] = results
+            if (data["pred"] == 1).any():
+                df_true = data[data["pred"] == 1]
 
-                df_true['cost'] = (
-                    df_true['sa'] * 17150
-                    + df_true['permanganate'] * 295900
-                    + (df_true['paa_kk'] + df_true['paa_f']) * 100000
+                df_true["cost"] = (
+                    df_true["sa"] * 17150
+                    + df_true["permanganate"] * 295900
+                    + (df_true["paa_kk"] + df_true["paa_f"]) * 100000
                 )
-                return df_true.sort_values(by='cost').iloc[0, -6:].tolist()
+                return df_true.sort_values(by="cost").iloc[0, -6:].tolist()
             return 0
 
         except Exception as e:
@@ -98,37 +98,37 @@ class Optimizer:
 
             df_feature = pd.DataFrame(custom_data_input_dict)
             w_pm = np.arange(
-                df['permanganate'].min(),
-                df['permanganate'].max(),
-                (df['permanganate'].max() - df['permanganate'].min()) / 50,
+                df["permanganate"].min(),
+                df["permanganate"].max(),
+                (df["permanganate"].max() - df["permanganate"].min()) / 50,
             )
             w_sa = np.arange(
-                df['sa'].min(),
-                df['sa'].max(),
-                (df['sa'].max() - df['sa'].min()) / 50,
+                df["sa"].min(),
+                df["sa"].max(),
+                (df["sa"].max() - df["sa"].min()) / 50,
             )
             w_paakk = np.arange(
-                df['paa_kk'].min(),
-                df['paa_kk'].max(),
-                (df['paa_kk'].max() - df['paa_kk'].min()) / 50,
+                df["paa_kk"].min(),
+                df["paa_kk"].max(),
+                (df["paa_kk"].max() - df["paa_kk"].min()) / 50,
             )
             w_paaf = np.arange(
-                df['paa_f'].min(),
-                df['paa_f'].max(),
-                (df['paa_f'].max() - df['paa_f'].min()) / 50,
+                df["paa_f"].min(),
+                df["paa_f"].max(),
+                (df["paa_f"].max() - df["paa_f"].min()) / 50,
             )
 
             weights = pd.DataFrame(data=[w_paakk, w_paaf, w_sa, w_pm]).T
-            weights.columns = ['paa_kk', 'paa_f', 'sa', 'permanganate']
+            weights.columns = ["paa_kk", "paa_f", "sa", "permanganate"]
             combos = cartesian([w_paakk, w_paaf, w_sa, w_pm])
             weights_combo = pd.DataFrame(
-                data=combos, columns=['paa_kk', 'paa_f', 'sa', 'permanganate']
+                data=combos, columns=["paa_kk", "paa_f", "sa", "permanganate"]
             )
 
             single_features_weights = (
                 df_feature.iloc[0, :-4]
                 .to_frame()
-                .T.merge(weights_combo, how='cross')
+                .T.merge(weights_combo, how="cross")
             )
 
             return single_features_weights

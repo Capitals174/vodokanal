@@ -8,23 +8,23 @@ from vodokanal.exceptions import CustomException
 
 @click.command()
 @click.option(
-    '--input_data_path',
+    "--input_data_path",
     required=True,
     type=click.Path(exists=True),
-    prompt='Specify input path',
-    help='Path to input data file',
+    prompt="Specify input path",
+    help="Path to input data file",
 )
 @click.option(
-    '--output_data_path',
+    "--output_data_path",
     required=True,
     type=click.Path(),
-    prompt='Specify output path',
-    help='Path to save output data file',
+    prompt="Specify output path",
+    help="Path to save output data file",
 )
 def data_normalization(input_data_path, output_data_path):
     try:
         df = pd.read_csv(input_data_path)
-        df = df.replace(',', '.', regex=True)
+        df = df.replace(",", ".", regex=True)
         df.fillna(0, inplace=True)
         df.iloc[::] = df.iloc[::].astype(float)
         df.to_csv(
@@ -38,5 +38,5 @@ def data_normalization(input_data_path, output_data_path):
         raise CustomException(e, sys)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     data_normalization()
