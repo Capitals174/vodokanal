@@ -1,0 +1,7 @@
+[core]
+    remote = minio
+['remote "minio"']
+    url = s3://vodokanal
+    endpointurl = http://194.67.125.183:9000
+    access_key_id = evgenius2020
+    secret_access_key = vodichka123spyman
