@@ -3,6 +3,8 @@ import pandas as pd
 import itertools
 import os
 import pickle
+from catboost import CatBoostClassifier
+import joblib
 
 import constants
 
@@ -57,22 +59,27 @@ class Optimiser:
         return material_combinations_df
 
     @staticmethod
-    def get_costs(df_with_dynamic_features, origin_water_params, water_flow):
-        water_flow = water_flow * 1000
-        df = df_with_dynamic_features
+    def create_data_for_predict(df_with_dynamic_features, origin_water_params):
+        df = df_with_dynamic_features.copy()
         for key, value in origin_water_params.items():
             df[key] = value
 
+        return df
+
+    @staticmethod
+    def get_costs(df_with_dynamic_features, water_flow):
+        df = df_with_dynamic_features.copy()
+        water_flow = water_flow * 1000
         prices = constants.reagent_prices
         df['cost'] = 0
         for key, value in prices.items():
-            df['cost'] = df['cost'] + df[key] * value /1000000000 * water_flow
+            df['cost'] = df['cost'] + df[key] * value / 1000000000 * water_flow
 
         return df
 
-    def get_prediction(self):
-        pass
-        #df['class'] = df.apply(lambda x: )
+    def get_prediction(self, data):
+        df['class'] = ...
+        # return df
 
     @staticmethod
     def _load_object(file_path):
@@ -86,18 +93,30 @@ class Optimiser:
         preds = model.predict(data_scaled)
         return preds
 
+    @staticmethod
+    def search_best_recommendation(data: pd.DataFrame):
+        df = data[data['quality_predict'] == 1]
+        df = df.sort_values(by='cost')
+        best_result = df.head(1)
+        return best_result
+
 
 if __name__ == '__main__':
     opt = Optimiser
     data_path = os.path.join('../..', '..', 'data', 'processed', 'data.csv')
     model_path = os.path.join('../..', '..', "models", "model.pkl")
-    preprocessor_path = os.path.join('../..', '..', "models", "preprocessor.pkl")
-    model = opt._load_object(file_path=model_path)
-    opt.model = model
+    # preprocessor_path = os.path.join('../..', '..', "models", "preprocessor.pkl")
+    model = joblib.load(model_path)
+    # opt.model = model
     origin_water_params = {'feculence': 42, 'ph': 7, 'mn': 0, 'fe': 2.7,
                            'alkalinity': 0.75}
 
     res = opt.create_default_restrictions(data=data_path)
-    df = opt.generate_combinations(res, 10)
-    df = opt.get_costs(df, origin_water_params, 5400)
-
+    combimations = opt.generate_combinations(res, 10)
+    df = opt.create_data_for_predict(combimations, origin_water_params)
+    # TODO удалить когда будет препроцессор
+    df = df[['feculence', 'ph', 'mn', 'fe', 'alkalinity', 'lime', 'paa_kk',
+             'paa_f', 'sa', 'permanganate']].drop_duplicates()
+    df['quality_predict'] = model.predict(df)
+    df = opt.get_costs(df, 5400)
+    best_recommend = opt.search_best_recommendation(df)
