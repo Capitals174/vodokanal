@@ -70,11 +70,16 @@ class Optimiser:
 
         return df
 
-    def _load_object(self, file_path):
+    def get_prediction(self):
+        pass
+        #df['class'] = df.apply(lambda x: )
+
+    @staticmethod
+    def _load_object(file_path):
         with open(file_path, "rb") as file_obj:
             return pickle.load(file_obj)
 
-    def predict(self, data, model_path, preprocessor_path, predictions_path):
+    def predict(self, data, model_path, preprocessor_path):
         model = self._load_object(file_path=model_path)
         preprocessor = self._load_object(file_path=preprocessor_path)
         data_scaled = preprocessor.transform(data)
@@ -84,10 +89,11 @@ class Optimiser:
 
 if __name__ == '__main__':
     opt = Optimiser
-    data_path = os.path.join("data", "processed", "data.csv")
-    model_path = os.path.join("..", "..", "models", "model.pkl")
-    preprocessor_path = os.path.join("..", "..", "models", "preprocessor.pkl")
-    #model = opt._load_object(file_path=model_path)
+    data_path = os.path.join('../..', '..', 'data', 'processed', 'data.csv')
+    model_path = os.path.join('../..', '..', "models", "model.pkl")
+    preprocessor_path = os.path.join('../..', '..', "models", "preprocessor.pkl")
+    model = opt._load_object(file_path=model_path)
+    opt.model = model
     origin_water_params = {'feculence': 42, 'ph': 7, 'mn': 0, 'fe': 2.7,
                            'alkalinity': 0.75}
 
